@@ -8,6 +8,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSuccessOpen, setIsSuccessOpen] = useState(false)
   const [confirmedEmail, setConfirmedEmail] = useState('')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handlePayment = (e) => {
     if (e) e.preventDefault();
@@ -60,12 +61,19 @@ function App() {
           <div className="logo">
             <span style={{color: 'var(--primary)'}}>Prof</span>Academy
           </div>
-          <div className="nav-links">
-            <a href="#features">Features</a>
-            <a href="#modules">Modules</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#contact">Contact</a>
-            <button onClick={() => document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})} className="btn btn-primary">Enroll Now</button>
+          
+          <button className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+            <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+            <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+          </button>
+
+          <div className={`nav-links ${isMenuOpen ? 'mobile-active' : ''}`}>
+            <a href="#features" onClick={() => setIsMenuOpen(false)}>Features</a>
+            <a href="#modules" onClick={() => setIsMenuOpen(false)}>Modules</a>
+            <a href="#pricing" onClick={() => setIsMenuOpen(false)}>Pricing</a>
+            <a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a>
+            <button onClick={() => { document.getElementById('pricing').scrollIntoView({behavior: 'smooth'}); setIsMenuOpen(false); }} className="btn btn-primary">Enroll Now</button>
           </div>
         </div>
       </nav>
@@ -75,22 +83,45 @@ function App() {
           <div className="hero-grid">
             <div className="hero-content">
               <span className="price-tag">Best Seller 2026</span>
-              <h1>Build your dream <span>e-business Today.</span></h1>
-              <p>Everything you need to build, launch, and scale your online business from scratch. Get certified by Prof Tidjani at Bluecrest College.</p>
-              <div className="hero-cta" style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
-                <button onClick={() => document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})} className="btn btn-primary">Get the E-book — GH₵199</button>
-                <a href="#features" style={{color: 'var(--text-muted)', textDecoration: 'none', fontWeight: '500'}}>Learn more →</a>
-              </div>
-              <div style={{marginTop: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                <div style={{display: 'flex'}}>
-                  {'⭐⭐⭐⭐⭐'.split('').map((s, i) => <span key={i} style={{color: '#FFD700'}}>{s}</span>)}
+              <h1>Build your dream <br className="mobile-only" /><span>e-business Today.</span></h1>
+              
+              {/* Image for Mobile Only - Placed between H1 and P */}
+              <div className="hero-image mobile-only-img">
+                <img src={ebookMockup} alt="E-Business for Bluecrest Students by Prof Tidjani" />
+                <div className="offer-badge" style={{
+                  position: 'absolute',
+                  bottom: '15px',
+                  right: '15px',
+                  background: 'rgba(0,0,0,0.8)',
+                  color: 'white',
+                  padding: '0.8rem',
+                  borderRadius: '10px',
+                  fontSize: '0.7rem'
+                }}>
+                  <strong>Limited Offer</strong><br/>
+                  GH₵199
                 </div>
-                <span style={{fontSize: '0.9rem', color: 'var(--text-muted)'}}>5,000+ Students enrolled</span>
+              </div>
+
+              <p className="hero-p">Everything you need to build, launch, and scale your online business from scratch. Get certified by Prof Tidjani at Bluecrest College.</p>
+              
+              <div className="hero-cta">
+                <button onClick={() => document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})} className="btn btn-primary">Get the E-book — GH₵199</button>
+                <a href="#features" className="learn-more">Learn more →</a>
+              </div>
+
+              <div className="hero-stats">
+                <div className="stars">
+                  {'⭐⭐⭐⭐⭐'.split('').map((s, i) => <span key={i}>{s}</span>)}
+                </div>
+                <span className="enroll-count">5,000+ Students enrolled</span>
               </div>
             </div>
-            <div className="hero-image">
+
+            {/* Image for Desktop Only - Placed on the Right */}
+            <div className="hero-image desktop-only-img">
               <img src={ebookMockup} alt="E-Business for Bluecrest Students by Prof Tidjani" />
-              <div style={{
+              <div className="offer-badge" style={{
                 position: 'absolute',
                 bottom: '20px',
                 right: '20px',
@@ -113,7 +144,7 @@ function App() {
         <div className="container">
           <div className="section-title">
             <span style={{color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.8rem'}}>Why Choose Us</span>
-            <h2>Everything you need to win online — in one place.</h2>
+            <h2>Everything you need to win online in one place.</h2>
           </div>
           <div className="features-grid">
             <div className="feature-card">
