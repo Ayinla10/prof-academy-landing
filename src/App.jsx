@@ -77,7 +77,7 @@ function App() {
               <span className="price-tag">Best Seller 2026</span>
               <h1>Build your dream <span>e-business Today.</span></h1>
               <p>Everything you need to build, launch, and scale your online business from scratch. Get certified by Prof Tidjani at Bluecrest College.</p>
-              <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
+              <div className="hero-cta" style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
                 <button onClick={() => document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})} className="btn btn-primary">Get the E-book — GH₵199</button>
                 <a href="#features" style={{color: 'var(--text-muted)', textDecoration: 'none', fontWeight: '500'}}>Learn more →</a>
               </div>
@@ -187,7 +187,7 @@ function App() {
               <p>We're here to help you make the best decision for your future.</p>
               <div className="info-item">
                 <h4>📍 Visit Us</h4>
-                <p>Bluecrest University College,<br/>Cockerel Hall, Accra, Ghana</p>
+                <p>Bluecrest College,<br/>Cockerel Hall, Accra, Ghana</p>
               </div>
               <div className="info-item">
                 <h4>📞 Call Us</h4>
@@ -279,7 +279,7 @@ function App() {
         <div className="container">
           <div className="footer-content">
             <div className="logo" style={{color: 'white'}}>Prof Academy</div>
-            <p>© 2024 Prof Academy | Powered by Bluecrest Ghana</p>
+            <p>© 2026 Prof Academy | Powered by Bluecrest College Ghana</p>
             <div className="nav-links">
               <a href="#" style={{color: 'white', opacity: 0.7}}>Privacy</a>
               <a href="#" style={{color: 'white', opacity: 0.7}}>Terms</a>
