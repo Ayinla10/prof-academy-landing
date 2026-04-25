@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PaystackButton } from 'react-paystack'
 import ebookMockup from './assets/ebook-mockup.png'
 
 function App() {
@@ -10,26 +11,33 @@ function App() {
   const [confirmedEmail, setConfirmedEmail] = useState('')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const handlePayment = (e) => {
-    if (e) e.preventDefault();
-    
-    if (!email || !name) {
-      alert('Please enter your name and email to proceed.');
-      return;
-    }
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: email,
+    amount: 19900, // GH₵199.00 in pesewas
+    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+    currency: 'GHS',
+  };
 
-    setIsProcessing(true);
+  const onSuccess = (reference) => {
+    console.log('Payment Successful:', reference);
+    setIsProcessing(false);
+    setConfirmedEmail(email);
+    setIsModalOpen(false);
+    setIsSuccessOpen(true);
+    sendEmailNotification(email, name);
+  };
 
-    // Simulated Payment Flow
-    setTimeout(() => {
-      setIsProcessing(false);
-      console.log('Payment successful (Simulated)');
-      sendEmailNotification(email, name);
-      setConfirmedEmail(email);
-      setIsModalOpen(false);
-      setIsSuccessOpen(true);
-      // Clean up inputs for next time (optional, keep for confirmation display)
-    }, 2000);
+  const onClose = () => {
+    console.log('Payment Closed');
+    setIsProcessing(false);
+  };
+
+  const componentProps = {
+    ...config,
+    text: 'Secure Checkout',
+    onSuccess,
+    onClose,
   };
 
   const handleCloseSuccess = () => {
@@ -278,14 +286,21 @@ function App() {
               style={{border: '1px solid #ddd'}}
             />
           </div>
-          <button 
-            onClick={handlePayment} 
-            disabled={isProcessing} 
-            className="btn btn-primary" 
-            style={{width: '100%', marginTop: '1rem', padding: '1.2rem'}}
-          >
-            {isProcessing ? 'Verifying Payment...' : 'Secure Checkout'}
-          </button>
+          {email && name ? (
+            <PaystackButton
+              {...componentProps}
+              className="btn btn-primary"
+              style={{width: '100%', marginTop: '1rem', padding: '1.2rem'}}
+            />
+          ) : (
+            <button 
+              onClick={() => alert('Please enter your name and email.')}
+              className="btn btn-primary" 
+              style={{width: '100%', marginTop: '1rem', padding: '1.2rem'}}
+            >
+              Secure Checkout
+            </button>
+          )}
           <div style={{marginTop: '1.5rem', textAlign: 'center', opacity: 0.6, fontSize: '0.8rem'}}>
             🔒 Your transaction is encrypted and secure.
           </div>
@@ -310,7 +325,7 @@ function App() {
         <div className="container">
           <div className="footer-content">
             <div className="logo" style={{color: 'white'}}>Prof Academy</div>
-            <p>© 2026 Prof Academy | Powered by Bluecrest College Ghana</p>
+            <p>© 2026 Prof Academy | Powered by Dr. Dickson Wornyo</p>
             <div className="nav-links">
               <a href="#" style={{color: 'white', opacity: 0.7}}>Privacy</a>
               <a href="#" style={{color: 'white', opacity: 0.7}}>Terms</a>
