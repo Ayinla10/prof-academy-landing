@@ -57,6 +57,27 @@ export const handler = async (event, context) => {
       `
     });
 
+    // 2. Schedule the "Beautiful" Follow-up Email (1 hour later) via QStash
+    if (process.env.QSTASH_TOKEN) {
+      try {
+        // Use the site's URL (either provided by Netlify or your custom domain)
+        const siteUrl = process.env.URL || 'https://prof.tedmarkdigital.com';
+        
+        await fetch(`https://qstash.upstash.io/v1/publish/${siteUrl}/.netlify/functions/send-followup`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.QSTASH_TOKEN}`,
+            'Content-Type': 'application/json',
+            'Upstash-Delay': '1h' // This tells QStash to wait 1 hour
+          },
+          body: JSON.stringify({ email, name })
+        });
+        console.log('Follow-up scheduled successfully');
+      } catch (scheduleError) {
+        console.error('Failed to schedule follow-up:', scheduleError);
+      }
+    }
+
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },

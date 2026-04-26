@@ -1,5 +1,18 @@
 import { useState } from 'react'
 import { PaystackButton } from 'react-paystack'
+import { 
+  Lightbulb, 
+  Rocket, 
+  TrendingUp, 
+  MapPin, 
+  Phone, 
+  Mail, 
+  CheckCircle, 
+  ShieldCheck, 
+  Star,
+  ChevronRight,
+  X
+} from 'lucide-react'
 import ebookMockup from './assets/ebook-mockup.png'
 
 function App() {
@@ -71,9 +84,13 @@ function App() {
           </div>
           
           <button className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
-            <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
-            <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+            {isMenuOpen ? <X size={28} /> : (
+              <>
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className="bar"></div>
+              </>
+            )}
           </button>
 
           <div className={`nav-links ${isMenuOpen ? 'mobile-active' : ''}`}>
@@ -115,12 +132,12 @@ function App() {
               
               <div className="hero-cta">
                 <button onClick={() => document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})} className="btn btn-primary">Get the E-book — GH₵199</button>
-                <a href="#features" className="learn-more">Learn more →</a>
+                <a href="#features" className="learn-more">Learn more <ChevronRight size={18} /></a>
               </div>
 
               <div className="hero-stats">
                 <div className="stars">
-                  {'⭐⭐⭐⭐⭐'.split('').map((s, i) => <span key={i}>{s}</span>)}
+                  {[1,2,3,4,5].map((i) => <Star key={i} size={16} fill="var(--primary)" color="var(--primary)" />)}
                 </div>
                 <span className="enroll-count">5,000+ Students enrolled</span>
               </div>
@@ -156,17 +173,17 @@ function App() {
           </div>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">💡</div>
+              <div className="feature-icon"><Lightbulb size={32} color="var(--primary)" /></div>
               <h3>Find your winning idea</h3>
               <p>We show you how to identify profitable niches that align with your skills.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🚀</div>
+              <div className="feature-icon"><Rocket size={32} color="var(--primary)" /></div>
               <h3>Launch in 30 days</h3>
               <p>A step-by-step roadmap to get your first customer within a month.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">📈</div>
+              <div className="feature-icon"><TrendingUp size={32} color="var(--primary)" /></div>
               <h3>Marketing that converts</h3>
               <p>Master the art of social media selling and high-conversion ads.</p>
             </div>
@@ -206,11 +223,11 @@ function App() {
             <h3>Prof Academy E-book</h3>
             <div className="price">GH₵199 <span>one-time</span></div>
             <ul className="pricing-features">
-              <li>Complete 12-Module Guide</li>
-              <li>E-business Mockup Templates</li>
-              <li>Lifetime Access to Updates</li>
-              <li>Certificate of Completion</li>
-              <li>Bluecrest Discount Voucher</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Complete 12-Module Guide</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> E-business Mockup Templates</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Lifetime Access to Updates</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Certificate of Completion</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Bluecrest Discount Voucher</li>
             </ul>
             <button onClick={() => setIsModalOpen(true)} className="btn btn-primary" style={{width: '100%', padding: '1.2rem'}}>Get My E-book</button>
             <p style={{marginTop: '1rem', fontSize: '0.8rem', opacity: 0.6}}>Secure Checkout • Instant Delivery</p>
@@ -225,15 +242,24 @@ function App() {
               <h2>Questions? Let's talk before you enroll.</h2>
               <p>We're here to help you make the best decision for your future.</p>
               <div className="info-item">
-                <h4>📍 Visit Us</h4>
+                <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.5rem'}}>
+                  <MapPin size={20} color="var(--primary)" />
+                  <h4 style={{margin: 0}}>Visit Us</h4>
+                </div>
                 <p>Bluecrest College,<br/>Cockerel Hall, Accra, Ghana</p>
               </div>
               <div className="info-item">
-                <h4>📞 Call Us</h4>
+                <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.5rem'}}>
+                  <Phone size={20} color="var(--primary)" />
+                  <h4 style={{margin: 0}}>Call Us</h4>
+                </div>
                 <p>+233 20 000 0000</p>
               </div>
               <div className="info-item">
-                <h4>✉️ Email Us</h4>
+                <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.5rem'}}>
+                  <Mail size={20} color="var(--primary)" />
+                  <h4 style={{margin: 0}}>Email Us</h4>
+                </div>
                 <p>info@profacademy.com.gh</p>
               </div>
             </div>
@@ -301,8 +327,8 @@ function App() {
               Secure Checkout
             </button>
           )}
-          <div style={{marginTop: '1.5rem', textAlign: 'center', opacity: 0.6, fontSize: '0.8rem'}}>
-            🔒 Your transaction is encrypted and secure.
+          <div style={{marginTop: '1.5rem', textAlign: 'center', opacity: 0.6, fontSize: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px'}}>
+            <ShieldCheck size={16} /> Your transaction is encrypted and secure.
           </div>
         </div>
       </div>
@@ -310,7 +336,9 @@ function App() {
       {/* Success Modal */}
       <div className={`modal-overlay ${isSuccessOpen ? 'active' : ''}`} onClick={handleCloseSuccess}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <div className="success-icon">✓</div>
+          <div className="success-icon" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <CheckCircle size={64} color="#4bb543" />
+          </div>
           <div className="success-message" style={{textAlign: 'center'}}>
             <h2>Payment Successful!</h2>
             <p>Your ebook <strong>"E-Business for Bluecrest Students"</strong> is on its way!</p>
